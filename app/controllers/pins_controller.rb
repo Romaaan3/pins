@@ -1,7 +1,8 @@
 class PinsController < ApplicationController
 
-  before_action :find_pin, only: [:show, :edit, :update, :destroy, :upvote]
+  before_action :find_pin, only: [:show, :edit, :update, :destroy, :upvote, :unvote]
   before_action :authenticate_user!, except: [:index, :show]
+  rescue_from ActiveRecord::RecordNotFound, with: :pin_not_found
 
   def index
     @pins = Pin.all.order("created_at DESC")
@@ -42,8 +43,23 @@ class PinsController < ApplicationController
   end
 
   def upvote
-    @pin.upvote_by current_user
-    redirect_to :back
+    @pin.liked_by current_user
+    respond_to do |format|
+    format.html { redirect_to :back }
+    format.js
+  end
+  end
+
+  def unvote
+    @pin.unliked_by current_user
+    respond_to do |format|
+    format.html { redirect_to :back }
+    format.js
+  end
+  end
+
+  def show_my
+    @pins = Pin.where(["user_id = ?", current_user.id])
   end
 
   private
@@ -53,6 +69,11 @@ class PinsController < ApplicationController
 
   def find_pin
     @pin = Pin.find(params[:id])
+  end
+
+  def pin_not_found
+    logger.error "Attempt to access a non-existent pin #{params[:id]}"
+    redirect_to root_path, notice: 'Pin not found'
   end
 
 end

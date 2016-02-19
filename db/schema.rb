@@ -13,7 +13,7 @@
 
 ActiveRecord::Schema.define(version: 20160118173644) do
 
-  create_table "pins", force: true do |t|
+  create_table "pins", force: :cascade do |t|
     t.string   "title"
     t.text     "description"
     t.datetime "created_at"
@@ -27,7 +27,7 @@ ActiveRecord::Schema.define(version: 20160118173644) do
 
   add_index "pins", ["user_id"], name: "index_pins_on_user_id"
 
-  create_table "users", force: true do |t|
+  create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
     t.string   "reset_password_token"
@@ -45,7 +45,7 @@ ActiveRecord::Schema.define(version: 20160118173644) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
 
-  create_table "votes", force: true do |t|
+  create_table "votes", force: :cascade do |t|
     t.integer  "votable_id"
     t.string   "votable_type"
     t.integer  "voter_id"

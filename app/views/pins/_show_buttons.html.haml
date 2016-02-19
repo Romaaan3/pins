@@ -1,0 +1,13 @@
+- if user_signed_in?
+  .btn-group.pull-right
+    - if current_user.voted_as_when_voted_for @pin
+      = link_to unlike_pin_path(@pin), method: :put, class: "btn btn-primary", remote: true do
+        %span.glyphicon.glyphicon-star-empty
+          = @pin.get_upvotes.size
+    - else
+      = link_to like_pin_path(@pin), method: :put, class: "btn btn-default", remote: true do
+        %span.glyphicon.glyphicon-star-empty
+          = @pin.get_upvotes.size
+    - if @pin.user_id == current_user.id
+      = link_to "Edit", edit_pin_path, class: "btn btn-default"
+      = link_to "Delete", pin_path, method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-default"
