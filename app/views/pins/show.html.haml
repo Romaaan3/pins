@@ -9,11 +9,18 @@
         %p
         Submitted by
         = @pin.user.email
-      .panel-footer
         .row
           .col-md-6
-            %p.user
-            Submitted by
-            = @pin.user.email
+
           .col-md-6
             = render 'show_buttons'
+      .panel-footer
+        %h3 Comments
+        = render @pin.comments
+        %h3.reply-to-pin Reply to Pin
+        - if user_signed_in?
+          = render 'comments/form'
+        - else
+          = link_to "Log In", new_user_session_path
+          to add a comment
+

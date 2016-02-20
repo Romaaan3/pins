@@ -1,0 +1,9 @@
+.comment
+  %p.comment-content= comment.content
+  %p.comment-posted-by
+    Posted by #{comment.user.email} #{time_ago_in_words(comment.created_at)} ago
+  .links
+    - if user_signed_in?
+      - if comment.user_id == current_user.id || @pin.user_id == current_user.id
+        = link_to "Edit", edit_pin_comment_path(comment.pin, comment)
+        = link_to "Delete", pin_comment_path(comment.pin, comment), method: :delete, data: { confirm: "Are you sure?" }

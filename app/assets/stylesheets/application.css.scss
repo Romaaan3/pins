@@ -14,7 +14,7 @@
  *= require_tree .
  *= require_self
  */
-
+@import url(http://fonts.googleapis.com/css?family=Playfair+Display|Muli:300,400);
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
@@ -156,3 +156,26 @@ textarea {
 .nav-button:active {
   top: 1px;
 }
+
+.comment {
+  border-bottom: 1px solid grey;
+  padding-top: 15px;
+  padding-bottom: 15px;
+
+  .comment-content {
+    font-size: 1.25em;
+  }
+
+  .comment-posted-by {
+    color: grey;
+    font-size: 0.8em;
+  }
+
+  .links {
+    margin-top: 15px;
+    a {
+      color: #0a8fd5;
+      margin-right: 15px;
+    }
+  }
+  }
