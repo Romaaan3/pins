@@ -6,6 +6,12 @@
   = javascript_include_tag 'application', 'data-turbolinks-track' => true
   = csrf_meta_tags
 %body
+  - if notice
+    #notice-wrapper
+      %p.notice= notice
+  - elsif alert
+    #notice-wrapper
+      %p.alert= alert
   %nav.navbar.navbar-default
     .container
       .navbar-brand= link_to "Pin Board", root_path
@@ -21,7 +27,14 @@
           %li= link_to "Sign up", new_user_registration_path, class: "nav-button"
           %li= link_to "Sign In", new_user_session_path, class: "nav-button"
   .container
-    - flash.each do |name, msg|
-      = content_tag :div, msg, class: "alert alert-info"
     = yield
+
+:javascript
+  $(document).ready(function(){
+    setTimeout(function(){
+      $('#notice-wrapper').fadeOut("slow", function() {
+        $(this).remove();
+      })
+    }, 3500);
+  });
 
