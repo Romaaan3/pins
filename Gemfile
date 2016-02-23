@@ -30,3 +30,16 @@ gem 'devise'
 gem 'paperclip'
 gem 'masonry-rails'
 gem 'acts_as_votable'
+
+group :development, :test  do
+  gem 'rspec-rails'
+  gem 'factory_girl_rails'
+end
+
+group :rest do
+  gem 'faker'
+  gem 'capybara'
+  gem 'database_cleaner'
+  gem 'launchy'
+  gem 'selenium-webdriver'
+end

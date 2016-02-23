@@ -1,11 +1,14 @@
 class CommentsController < ApplicationController
- before_action :find_pin
+  before_action :find_pin
   before_action :find_comment, only: [:edit, :update, :destroy]
   before_action :authenticate_user!
+
+
 
   def create
     @comment = @pin.comments.create(comment_params)
     @comment.user_id = current_user.id
+    @comment.save
 
     if @comment.save
       redirect_to pin_path(@pin)
