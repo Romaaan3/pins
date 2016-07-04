@@ -4,9 +4,23 @@ class PinsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
   rescue_from ActiveRecord::RecordNotFound, with: :pin_not_found
 
+  before_action :find_my, only: [:show_my, :delete_my]
+
+
   def index
     @pins = Pin.all.order("created_at DESC")
   end
+
+
+  respond_to do |format|
+      if @test.save
+        format.html { redirect_to @test, notice: 'Test was successfully created.' }
+        format.json { render :show, status: :created, location: @test }
+      else
+        format.html { render :new }
+        format.json { render json: @test.errors, status: :unprocessable_entity }
+      end
+    end
 
   def show
 
@@ -59,12 +73,21 @@ class PinsController < ApplicationController
   end
 
   def show_my
-    @pins = Pin.where(["user_id = ?", current_user.id])
+  end
+
+  def delete_my
+    @pins.delete_all
+    redirect_to root_path
+
   end
 
   private
   def pin_params
     params.require(:pin).permit(:title, :description, :image)
+  end
+
+  def find_my
+    @pins = Pin.where(["user_id = ?", current_user.id])
   end
 
   def find_pin

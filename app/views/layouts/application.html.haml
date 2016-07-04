@@ -18,6 +18,7 @@
 
       - if user_signed_in?
         %ul.nav.navbar-nav.navbar-right
+          %li= link_to "Delete All My Pins", del_path, method: :delete, data: { confirm: "Are you sure?" }, class: "nav-button"
           %li= link_to "My Pins", my_path, class: "nav-button"
           %li= link_to "New Pin", new_pin_path, class: "nav-button"
           %li= link_to "Account", edit_user_registration_path, class: "nav-button"

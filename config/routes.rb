@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   end
 
   get "my", to: "pins#show_my"
-
+  delete "del", to: "pins#delete_my"
 
   root "pins#index"
 
